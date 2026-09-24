@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cmath>
 using namespace std;
 
 const int MAX_STUDENTS = 150;
@@ -98,9 +99,10 @@ int main()
         total += students[i].score;
     }
 
+    // Calculate the mean score.
     double mean = total / count;
 
-    // Copy the records so the original ID-sorted array stays unchanged.
+    // Copy the records so the ID-sorted array stays unchanged.
     Student scoreSorted[MAX_STUDENTS];
 
     for (int i = 0; i < count; i++)
@@ -130,7 +132,7 @@ int main()
         }
     }
 
-    // Find the median score.
+    // Calculate the median score.
     double median;
 
     if (count % 2 == 0)
@@ -155,6 +157,19 @@ int main()
         }
     }
 
+    // Add the squared differences from the mean.
+    double squaredDifferenceTotal = 0.0;
+
+    for (int i = 0; i < count; i++)
+    {
+        double difference = students[i].score - mean;
+        squaredDifferenceTotal += difference * difference;
+    }
+
+    // Calculate the population standard deviation.
+    double standardDeviation =
+        sqrt(squaredDifferenceTotal / count);
+
     cout << "\n--- Summary Statistics ---" << endl;
 
     cout << "Minimum Score: "
@@ -173,6 +188,9 @@ int main()
          << median
          << " (Student ID: "
          << students[medianIndex].id << ")" << endl;
+
+    cout << "Standard Deviation: "
+         << standardDeviation << endl;
 
     return 0;
 }

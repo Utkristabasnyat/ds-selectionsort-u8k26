@@ -58,14 +58,26 @@ int main()
 
     cout << "Student records sorted by ID." << endl;
 
-    // Display the first five records to verify the sort.
-    cout << "\nFirst five sorted records:" << endl;
+    // Open the required output file.
+    ofstream outputFile("210-lab-13-grades-sorted.txt");
 
-    for (int i = 0; i < 5 && i < count; i++)
+    if (!outputFile)
     {
-        cout << students[i].id << " "
-             << students[i].score << endl;
+        cout << "Error opening output file." << endl;
+        return 1;
     }
+
+    // Write all sorted student records to the output file.
+    for (int i = 0; i < count; i++)
+    {
+        outputFile << students[i].id << " "
+                   << students[i].score << endl;
+    }
+
+    outputFile.close();
+
+    cout << "Sorted results written to "
+         << "210-lab-13-grades-sorted.txt" << endl;
 
     return 0;
 }

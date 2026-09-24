@@ -56,8 +56,6 @@ int main()
         }
     }
 
-    cout << "Student records sorted by ID." << endl;
-
     // Open the required output file.
     ofstream outputFile("210-lab-13-grades-sorted.txt");
 
@@ -78,6 +76,36 @@ int main()
 
     cout << "Sorted results written to "
          << "210-lab-13-grades-sorted.txt" << endl;
+
+    // Start with the first student as both minimum and maximum.
+    int minIndex = 0;
+    int maxIndex = 0;
+
+    // Search through all scores for the minimum and maximum.
+    for (int i = 1; i < count; i++)
+    {
+        if (students[i].score < students[minIndex].score)
+        {
+            minIndex = i;
+        }
+
+        if (students[i].score > students[maxIndex].score)
+        {
+            maxIndex = i;
+        }
+    }
+
+    cout << "\n--- Summary Statistics ---" << endl;
+
+    cout << "Minimum Score: "
+         << students[minIndex].score
+         << " (Student ID: "
+         << students[minIndex].id << ")" << endl;
+
+    cout << "Maximum Score: "
+         << students[maxIndex].score
+         << " (Student ID: "
+         << students[maxIndex].id << ")" << endl;
 
     return 0;
 }

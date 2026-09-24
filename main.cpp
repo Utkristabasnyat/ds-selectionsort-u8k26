@@ -80,11 +80,9 @@ int main()
     // Start with the first student as both minimum and maximum.
     int minIndex = 0;
     int maxIndex = 0;
-
-    // Keep a running total for the mean.
     double total = 0.0;
 
-    // Find the minimum and maximum scores and add all scores.
+    // Find minimum, maximum, and total score.
     for (int i = 0; i < count; i++)
     {
         if (students[i].score < students[minIndex].score)
@@ -100,8 +98,62 @@ int main()
         total += students[i].score;
     }
 
-    // Calculate the average score.
     double mean = total / count;
+
+    // Copy the records so the original ID-sorted array stays unchanged.
+    Student scoreSorted[MAX_STUDENTS];
+
+    for (int i = 0; i < count; i++)
+    {
+        scoreSorted[i] = students[i];
+    }
+
+    // Selection sort the copy by exam score.
+    for (int i = 0; i < count - 1; i++)
+    {
+        int minScoreIndex = i;
+
+        for (int j = i + 1; j < count; j++)
+        {
+            if (scoreSorted[j].score <
+                scoreSorted[minScoreIndex].score)
+            {
+                minScoreIndex = j;
+            }
+        }
+
+        if (minScoreIndex != i)
+        {
+            Student temp = scoreSorted[i];
+            scoreSorted[i] = scoreSorted[minScoreIndex];
+            scoreSorted[minScoreIndex] = temp;
+        }
+    }
+
+    // Find the median score.
+    double median;
+
+    if (count % 2 == 0)
+    {
+        median = (scoreSorted[count / 2 - 1].score +
+                  scoreSorted[count / 2].score) / 2.0;
+    }
+    else
+    {
+        median = scoreSorted[count / 2].score;
+    }
+
+    // Find a student associated with the median score.
+    int medianIndex = 0;
+
+    for (int i = 0; i < count; i++)
+    {
+        if (students[i].score == median)
+        {
+            medianIndex = i;
+            break;
+        }
+    }
 
     cout << "\n--- Summary Statistics ---" << endl;
 
@@ -116,6 +168,11 @@ int main()
          << students[maxIndex].id << ")" << endl;
 
     cout << "Mean Score: " << mean << endl;
+
+    cout << "Median Score: "
+         << median
+         << " (Student ID: "
+         << students[medianIndex].id << ")" << endl;
 
     return 0;
 }

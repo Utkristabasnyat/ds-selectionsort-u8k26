@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include <cmath>
 using namespace std;
 
@@ -19,6 +20,7 @@ int main()
 
     ifstream inputFile("210-lab-13-grades.txt");
 
+    // Stop the program if the input file cannot be opened.
     if (!inputFile)
     {
         cout << "Error opening input file." << endl;
@@ -33,6 +35,13 @@ int main()
     }
 
     inputFile.close();
+
+    // Make sure there is data before continuing.
+    if (count == 0)
+    {
+        cout << "Error: no student records were read." << endl;
+        return 1;
+    }
 
     cout << "Read " << count << " student records" << endl;
 
@@ -60,13 +69,16 @@ int main()
     // Open the required output file.
     ofstream outputFile("210-lab-13-grades-sorted.txt");
 
+    // Stop the program if the output file cannot be opened.
     if (!outputFile)
     {
         cout << "Error opening output file." << endl;
         return 1;
     }
 
-    // Write all sorted student records to the output file.
+    // Write the sorted records in the same format as the input file.
+    outputFile << fixed << setprecision(1);
+
     for (int i = 0; i < count; i++)
     {
         outputFile << students[i].id << " "
@@ -102,7 +114,7 @@ int main()
     // Calculate the mean score.
     double mean = total / count;
 
-    // Copy the records so the ID-sorted array stays unchanged.
+    // Copy records so the ID-sorted array remains unchanged.
     Student scoreSorted[MAX_STUDENTS];
 
     for (int i = 0; i < count; i++)

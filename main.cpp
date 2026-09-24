@@ -81,8 +81,11 @@ int main()
     int minIndex = 0;
     int maxIndex = 0;
 
-    // Search through all scores for the minimum and maximum.
-    for (int i = 1; i < count; i++)
+    // Keep a running total for the mean.
+    double total = 0.0;
+
+    // Find the minimum and maximum scores and add all scores.
+    for (int i = 0; i < count; i++)
     {
         if (students[i].score < students[minIndex].score)
         {
@@ -93,7 +96,12 @@ int main()
         {
             maxIndex = i;
         }
+
+        total += students[i].score;
     }
+
+    // Calculate the average score.
+    double mean = total / count;
 
     cout << "\n--- Summary Statistics ---" << endl;
 
@@ -106,6 +114,8 @@ int main()
          << students[maxIndex].score
          << " (Student ID: "
          << students[maxIndex].id << ")" << endl;
+
+    cout << "Mean Score: " << mean << endl;
 
     return 0;
 }
